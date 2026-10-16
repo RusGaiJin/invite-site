@@ -38,11 +38,18 @@ button{font:inherit;cursor:pointer}
 .scene{position:absolute;inset:0;perspective:2400px;perspective-origin:50% 20%}
 .stage{position:absolute;inset:-2%;transition:transform .6s ease-out, opacity 1s ease;transform-style:preserve-3d}
 .pocket{position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,25,12,.5),rgba(25,25,12,0) 40%),url("a/liner.webp") 50% 0/cover no-repeat}
+.card::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;mix-blend-mode:multiply;
+  background:url("a/age.webp") 0 0/420px 420px repeat,radial-gradient(ellipse at 50% 45%,rgba(150,104,48,0) 45%,rgba(150,104,48,.32) 100%),linear-gradient(rgba(214,180,120,.18),rgba(214,180,120,.18));
+  -webkit-mask:url("a/card.webp") 0 0/100% 100% no-repeat;mask:url("a/card.webp") 0 0/100% 100% no-repeat}
 .card{position:absolute;left:8%;right:8%;top:11%;bottom:14%;z-index:2;background:url("a/card.webp") 0 0/100% 100% no-repeat;filter:drop-shadow(0 8px 18px rgba(30,30,15,.35));
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:9%;gap:8px;text-align:center;
   transform:translateY(8%);transition:transform 2.2s cubic-bezier(.4,0,.2,1)}
 .card small{font-family:var(--f-display);letter-spacing:.24em;text-transform:uppercase;font-size:12px;color:var(--ink-soft)}
 .card strong{font-family:var(--f-script);font-weight:400;font-size:clamp(34px,9vw,54px);line-height:1.05;color:var(--wine)}
+.card-sprig{position:absolute;z-index:3;width:46%;height:auto;pointer-events:none;opacity:.95}
+.card-sprig.tl{left:1%;top:1%}
+.card-sprig.br{right:1%;bottom:1%}
+.card > *:not(.card-sprig){position:relative;z-index:2}
 .card-dancer{width:72%;height:52%;margin-top:2%}
 .card em{font-style:normal;font-family:var(--f-display);font-size:clamp(20px,5vw,26px);letter-spacing:.12em;color:var(--ink)}
 .front{position:absolute;inset:0;z-index:3;transform-style:preserve-3d;transition:opacity 1.2s ease}
@@ -124,12 +131,21 @@ button{font:inherit;cursor:pointer}
 .sheet-shadow{position:absolute;inset:0;background:rgba(28,26,12,.6);filter:blur(5px);transform:translateY(3px);opacity:0;transition:opacity 1.2s ease .35s;pointer-events:none}
 .sheet:has(.page.on) .sheet-shadow{opacity:1}
 .page{position:relative;overflow-x:clip;background:var(--porcelain) url("a/paper.webp") 0 0/540px 540px repeat}
-.page::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;box-shadow:inset 0 0 0 2px rgba(255,250,238,.55),inset 0 0 18px rgba(150,120,70,.28)}
+.page::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;
+  box-shadow:inset 0 0 0 2px rgba(255,250,238,.45),inset 0 0 6px rgba(110,66,22,.55),inset 0 0 26px rgba(130,84,34,.42),inset 0 0 80px rgba(150,104,48,.22)}
+/* aged parchment: stains, foxing and a yellowed tint, laid over everything like real old paper */
+.page::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;mix-blend-mode:multiply;
+  background:url("a/age.webp") 0 0/800px 800px repeat,
+    linear-gradient(90deg,rgba(150,104,48,.28),rgba(150,104,48,0) 14%,rgba(150,104,48,0) 86%,rgba(150,104,48,.28)),
+    linear-gradient(rgba(214,180,120,.16),rgba(214,180,120,.16))}
+.sprig{position:absolute;z-index:0;width:min(30vw,130px);height:auto;pointer-events:none;opacity:.88;animation:sway 8s ease-in-out infinite alternate}
+.sprig.l{left:-14px;transform-origin:0 50%}
+.sprig.r{right:-14px;transform:scaleY(-1);transform-origin:100% 50%;animation-name:swayR}
 .hero{position:relative;z-index:1;text-align:center;padding-block:8px 30px}
-.hero::before{content:"";position:absolute;left:50%;top:46%;width:min(120%,720px);aspect-ratio:900/321;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
-  background:url("a/rings-bg.webp") center/contain no-repeat;opacity:.24;animation:ringsGlow 7s ease-in-out infinite alternate}
-@keyframes ringsIn{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}to{opacity:.24;transform:translate(-50%,-50%) scale(1)}}
-@keyframes ringsGlow{from{opacity:.24;transform:translate(-50%,-50%) scale(1)}to{opacity:.32;transform:translate(-50%,-50%) scale(1.03)}}
+.hero::before{display:none;content:"";position:absolute;left:50%;top:47%;width:min(125%,780px);aspect-ratio:1100/396;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+  background:url("a/rings3dc.webp") center/contain no-repeat;opacity:1;animation:ringsGlow 7s ease-in-out infinite alternate}
+@keyframes ringsIn{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}to{opacity:.92;transform:translate(-50%,-50%) scale(1)}}
+@keyframes ringsGlow{from{opacity:.92;transform:translate(-50%,-50%) scale(1)}to{opacity:1;transform:translate(-50%,-50%) scale(1.02)}}
 .anim .hero::before{opacity:0}
 .anim .page.on .hero::before{animation:ringsIn 2.2s cubic-bezier(.22,1,.36,1) .6s forwards, ringsGlow 7s ease-in-out 2.8s infinite alternate}
 .band{position:relative;overflow:hidden;height:100vh;height:100svh;min-height:520px;max-height:1000px;
@@ -339,15 +355,16 @@ button{font:inherit;cursor:pointer}
 .anim .page.on .hero > *{animation:up 1.1s cubic-bezier(.22,1,.36,1) forwards}
 .anim .page.on .hero > :nth-child(1){animation-delay:.5s}
 .anim .page.on .hero > :nth-child(3){animation-delay:1.9s}.anim .page.on .hero > :nth-child(4){animation-delay:2.15s}.anim .page.on .hero > :nth-child(5){animation-delay:2.5s}
-.anim .page.on .hero .names{opacity:1;transform:none;clip-path:inset(-15% 100% -20% -5%);animation:write 1.7s cubic-bezier(.45,0,.25,1) .75s forwards}
+.anim .page.on .hero .names{opacity:1;transform:none;clip-path:inset(-15% 130% -20% -30%);animation-name:writeWide!important;animation:write 1.7s cubic-bezier(.45,0,.25,1) .75s forwards}
 @keyframes up{to{opacity:1;transform:none}}
+@keyframes writeWide{to{clip-path:inset(-15% -30% -20% -30%)}}
 @keyframes write{to{clip-path:inset(-15% -5% -20% -5%)}}
 
 /* raised letters: light catches the top-left edge, a soft shadow falls bottom-right, like embossed paper */
 :root{
-  --emb-lg:-1px -1px 0 rgba(255,252,242,.85),1.5px 1.5px 1px rgba(84,54,26,.42),3px 4px 7px rgba(84,54,26,.2);
-  --emb:-1px -1px 0 rgba(255,252,242,.8),1px 1px 1px rgba(84,54,26,.36),2px 2px 4px rgba(84,54,26,.14);
-  --emb-sm:-.5px -.5px 0 rgba(255,252,242,.75),.6px .8px .6px rgba(84,54,26,.28);
+  --emb-lg:-1px -1px 0 rgba(255,252,242,.9),1.6px 1.8px 1px rgba(84,54,26,.5),3px 4px 7px rgba(84,54,26,.24);
+  --emb:-1px -1px 0 rgba(255,252,242,.9),1.3px 1.4px .8px rgba(84,54,26,.48),2.4px 3px 4px rgba(84,54,26,.18);
+  --emb-sm:-.8px -.8px 0 rgba(255,252,242,.9),1px 1.1px .6px rgba(84,54,26,.44),1.6px 2px 3px rgba(84,54,26,.16);
 }
 .names,.bd-day,.sig,.card strong{text-shadow:var(--emb-lg)}
 .names span{text-shadow:var(--emb)}
@@ -366,13 +383,20 @@ button{font:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01s!important;transition-delay:0s!important}
 }
+/* coloured relief rings sit between the two names, the small "и" rests on them */
+.names span{position:relative;display:grid!important;place-items:center;height:clamp(118px,34vw,190px);margin:.12em -12% !important;
+  background:url("a/rings3dc.webp") center/contain no-repeat;font-size:.3em!important;color:transparent!important;text-shadow:none!important}
+.anim .names span{opacity:0;transform:scale(.94)}
+.anim .page.on .names span{animation:ringsShow 1.6s cubic-bezier(.22,1,.36,1) 1.3s forwards, ringsBreath 7s ease-in-out 3s infinite alternate}
+@keyframes ringsShow{to{opacity:1;transform:none}}
+@keyframes ringsBreath{from{transform:scale(1)}to{transform:scale(1.025)}}
 </style>
 
 <!-- ====== Envelope gate ====== -->
 <div id="gate" aria-label="Конверт с приглашением">
   <div class="scene"><div class="stage" id="stage">
     <div class="pocket"></div>
-    <div class="card"><small>Приглашение</small><strong>Геннадий<br>&amp; Наталья</strong><em>27 · 11 · 2026</em><div class="dancer card-dancer" data-dancer aria-hidden="true"></div></div>
+    <div class="card"><small>Приглашение</small><strong>Геннадий<br>&amp; Наталья</strong><em>27 · 11 · 2026</em><img class="card-sprig tl" src="a/corner-tl.webp" alt=""><img class="card-sprig br" src="a/corner-br.webp" alt=""><div class="dancer card-dancer" data-dancer aria-hidden="true"></div></div>
     <div class="front"><div class="fold fl"><div class="tri l"></div></div><div class="fold fr"><div class="tri r"></div></div><div class="fold fb"><div class="tri b"></div></div></div>
     <div class="flap"><div class="face out"><i></i></div><div class="face in"><i></i></div></div>
   </div></div>
@@ -722,8 +746,20 @@ button{font:inherit;cursor:pointer}
       el.style.clipPath = 'polygon(' + pts.map(p => p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px').join(',') + ')';
     });
   }
+  function placeSprigs(){
+    page.querySelectorAll('.sprig').forEach(e => e.remove());
+    const pr = page.getBoundingClientRect();
+    weaveGroups.forEach((g,i) => {
+      if (i === 0 || i % 2) return;
+      const q = g.els[0].getBoundingClientRect();
+      const im = new Image(); im.alt = ''; im.className = 'sprig ' + (i % 4 ? 'r' : 'l');
+      im.src = i % 4 ? 'a/corner-br.webp' : 'a/corner-tl.webp';
+      im.style.top = (q.top - pr.top - 90) + 'px'; im.style.animationDelay = (-i*1.3) + 's';
+      page.appendChild(im);
+    });
+  }
   function layoutRoad(){
-    tearBlocks(); tearEdges();
+    tearBlocks(); tearEdges(); placeSprigs();
     const W = journey.offsetWidth, H = journey.offsetHeight;
     road.setAttribute('width', W); road.setAttribute('height', H); road.setAttribute('viewBox','0 0 '+W+' '+H);
     const eh = endheart.getBoundingClientRect(), jr = journey.getBoundingClientRect();
