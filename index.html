@@ -19,12 +19,12 @@
   --line:#dad8cb;
   --f-display:"Forum", "Cormorant Garamond", Georgia, serif;
   --f-script:"Marck Script", "Segoe Script", cursive;
-  --f-body:"Manrope", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Forum", "Cormorant Garamond", Georgia, serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
-html,body{background:#6a6b4f url("a/paper.webp") 0 0/540px 540px repeat;background-blend-mode:multiply;color:var(--ink)}
-body{font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+html,body{background:#55573f url("a/liner-tile.webp") 0 0/1100px 701px repeat;color:var(--ink)}
+body{font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body.locked{overflow:hidden}
 a{color:inherit}
 button{font:inherit;cursor:pointer}
@@ -133,8 +133,10 @@ button{font:inherit;cursor:pointer}
 .anim .hero::before{opacity:0}
 .anim .page.on .hero::before{animation:ringsIn 2.2s cubic-bezier(.22,1,.36,1) .6s forwards, ringsGlow 7s ease-in-out 2.8s infinite alternate}
 .band{position:relative;overflow:hidden;height:100vh;height:100svh;min-height:520px;max-height:1000px;
-  background:radial-gradient(95% 78% at 50% 42%,rgba(255,249,236,.55) 0%,rgba(218,198,158,.26) 70%,rgba(218,198,158,0) 100%)}
-.band::before{content:none}
+  background:none}
+.band::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(95% 78% at 50% 42%,rgba(255,249,236,.55) 0%,rgba(218,198,158,.26) 70%,rgba(218,198,158,0) 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%)}
 .band::after{content:none}
 .band .band-dancer{position:absolute;left:50%;bottom:19%;height:min(72%,calc(88vw * 620 / 420));aspect-ratio:420/620;transform:translateX(-50%);z-index:2}
 .band::selection{background:none}
@@ -172,13 +174,18 @@ button{font:inherit;cursor:pointer}
 
 .journey{position:relative;--g:16px;padding-inline:var(--g);padding-bottom:30px}
 @media (min-width:700px){.journey{--g:24px}}
-.journey > .stop{width:80%}
-.journey > .stop:nth-of-type(odd){margin-right:auto}
-.journey > .stop:nth-of-type(even){margin-left:auto}
+.stop > .wl{justify-self:start;width:82%}
+.stop > .wr{justify-self:end;width:82%}
+.stop > .wfirst:not(:first-child){margin-top:64px}
+.stop > .wr.kicker,.stop > .wr + .wr:is(h2,p){text-align:left}
 #road{position:absolute;left:0;top:0;width:100%;overflow:visible;pointer-events:none;z-index:2}
 #road .bed{fill:none;stroke:#cdc9b5;stroke-width:1.6;stroke-dasharray:1 7;stroke-linecap:round}
-#road .glow{fill:none;stroke:var(--wine);stroke-opacity:.18;stroke-width:9;stroke-linecap:round;filter:blur(3px)}
-#road .trail{fill:none;stroke:var(--wine);stroke-width:2;stroke-linecap:round;stroke-opacity:.75}
+#road .glow,#road .trail{fill:none;stroke:none}
+#road .bed{stroke-opacity:.55}
+/* heart footprints pressed into the paper, left-right like steps in snow */
+#prints{filter:drop-shadow(.6px .9px 0 rgba(255,252,242,.85)) drop-shadow(-.5px -.6px 0 rgba(84,54,26,.35))}
+#prints use{fill:var(--wine);opacity:0;transform-box:fill-box;transform-origin:center;transition:opacity .5s ease}
+#prints use.on{opacity:.62}
 .stop-heart{fill:var(--porcelain);stroke:var(--wine);stroke-width:1.6;transition:fill .5s;transform-box:fill-box;transform-origin:center}
 .stop-heart.lit{fill:var(--wine);animation:pop .6s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.7)}100%{transform:scale(1)}}
@@ -207,8 +214,13 @@ button{font:inherit;cursor:pointer}
 .cal-grid .d.day{color:#fff;font-weight:600}
 .cal-grid .d.day svg{position:absolute;left:50%;top:50%;width:38px;height:38px;transform:translate(-50%,-50%);z-index:0}
 .cal-grid .d.day b{position:relative;z-index:1}
-.countdown{display:flex;gap:10px;flex-wrap:wrap}
-.cd{min-width:74px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);text-align:center}
+.countdown{display:flex;gap:6px;min-width:0}
+.cal .countdown{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(120,90,50,.32)}
+.cal .cd{max-width:none}
+.cd small{font-size:12px!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap}
+.cd{min-width:0;flex:1 1 0;max-width:84px;padding:10px 2px;border:1px solid var(--line);border-radius:8px;background:var(--card);text-align:center}
+.cd b.flip{animation:flip .45s cubic-bezier(.22,1,.36,1)}
+@keyframes flip{0%{transform:translateY(-35%);opacity:0}100%{transform:none;opacity:1}}
 .cd b{display:block;font-family:var(--f-display);font-size:28px;font-weight:400;font-variant-numeric:tabular-nums;line-height:1.1}
 .cd small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
 
@@ -234,7 +246,7 @@ button{font:inherit;cursor:pointer}
 .map .tag{position:absolute;right:10px;bottom:10px;background:rgba(251,250,247,.92);border-radius:999px;padding:6px 12px;font-size:12px;color:var(--ink)}
 .actions{display:flex;flex-wrap:wrap;gap:10px}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;border:1.5px solid var(--wine);transition:background .2s,color .2s,transform .2s}
-.btn.primary{background:var(--wine);color:#fff}
+.btn.primary{background:var(--wine);color:#fff;text-shadow:0 1px 1px rgba(60,30,10,.45)!important}
 .btn.primary:hover{background:var(--wine-deep);transform:translateY(-1px)}
 .btn.ghost{color:var(--wine);background:transparent}
 .btn.ghost:hover{background:rgba(166,95,56,.07)}
@@ -306,7 +318,7 @@ button{font:inherit;cursor:pointer}
 .anim .stop.in > *,.anim .stop.in .prog li,.anim .stop.in .fun li{opacity:1;transform:none}
 .anim .stop.in .fun li:nth-child(1){transition-delay:.3s}.anim .stop.in .fun li:nth-child(2){transition-delay:.4s}.anim .stop.in .fun li:nth-child(3){transition-delay:.5s}.anim .stop.in .fun li:nth-child(4){transition-delay:.6s}
 .anim .stop.in .fun li:nth-child(5){transition-delay:.7s}.anim .stop.in .fun li:nth-child(6){transition-delay:.8s}.anim .stop.in .fun li:nth-child(7){transition-delay:.9s}.anim .stop.in .fun li:nth-child(8){transition-delay:1s}
-.manor{margin:0;border-radius:14px;overflow:hidden;max-width:100%;aspect-ratio:1100/674;box-shadow:0 10px 30px -14px rgba(60,50,30,.45)}
+.manor{position:relative;margin:0;border-radius:14px;overflow:hidden;max-width:100%;aspect-ratio:1100/674;box-shadow:0 10px 30px -14px rgba(60,50,30,.45)}
 .manor img{display:block;width:100%;height:100%;object-fit:cover}
 .anim .manor img{transform:scale(1.12)}
 .anim .stop.in .manor img{transform:scale(1);transition:transform 7s cubic-bezier(.22,1,.36,1)}
@@ -327,10 +339,28 @@ button{font:inherit;cursor:pointer}
 .anim .page.on .hero > *{animation:up 1.1s cubic-bezier(.22,1,.36,1) forwards}
 .anim .page.on .hero > :nth-child(1){animation-delay:.5s}
 .anim .page.on .hero > :nth-child(3){animation-delay:1.9s}.anim .page.on .hero > :nth-child(4){animation-delay:2.15s}.anim .page.on .hero > :nth-child(5){animation-delay:2.5s}
-.anim .page.on .hero .names{opacity:1;transform:none;clip-path:inset(0 100% 0 0);animation:write 1.7s cubic-bezier(.45,0,.25,1) .75s forwards}
+.anim .page.on .hero .names{opacity:1;transform:none;clip-path:inset(-15% 100% -20% -5%);animation:write 1.7s cubic-bezier(.45,0,.25,1) .75s forwards}
 @keyframes up{to{opacity:1;transform:none}}
-@keyframes write{to{clip-path:inset(0 -5% 0 0)}}
-.anim .finale .sig{clip-path:inset(0 100% 0 0)}
+@keyframes write{to{clip-path:inset(-15% -5% -20% -5%)}}
+
+/* raised letters: light catches the top-left edge, a soft shadow falls bottom-right, like embossed paper */
+:root{
+  --emb-lg:-1px -1px 0 rgba(255,252,242,.85),1.5px 1.5px 1px rgba(84,54,26,.42),3px 4px 7px rgba(84,54,26,.2);
+  --emb:-1px -1px 0 rgba(255,252,242,.8),1px 1px 1px rgba(84,54,26,.36),2px 2px 4px rgba(84,54,26,.14);
+  --emb-sm:-.5px -.5px 0 rgba(255,252,242,.75),.6px .8px .6px rgba(84,54,26,.28);
+}
+.names,.bd-day,.sig,.card strong{text-shadow:var(--emb-lg)}
+.names span{text-shadow:var(--emb)}
+.stop h2,.lead,.datebar,.cd b,.fun b,.ct-t b,.cal-head,.place-name,.card em{text-shadow:var(--emb)}
+.page,.card{text-shadow:var(--emb-sm)}
+.eyebrow,.kicker,.scrollcue,.bd-sub,.stop p,.fun span,.ct-t span,.cal-grid,.cd small,.addr,.card small{text-shadow:var(--emb-sm)}
+/* blocks pressed into the paper, with torn edges (outline set by script) */
+.torn{position:relative;border:0!important;border-radius:0!important;background:rgba(226,212,184,.38)!important}
+.torn::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  box-shadow:inset 3px 4px 7px rgba(84,54,26,.38),inset -2px -3px 4px rgba(255,252,242,.8),inset 0 0 0 1px rgba(120,90,50,.12)}
+.manor.torn,.map.torn{box-shadow:none!important}
+.copy{font-family:var(--f-body);font-size:14px}
+.anim .finale .sig{clip-path:inset(-15% 100% -20% -5%)}
 .anim .finale.in .sig{animation:write 1.6s cubic-bezier(.45,0,.25,1) .2s forwards}
 
 @media (prefers-reduced-motion:reduce){
@@ -408,7 +438,7 @@ button{font:inherit;cursor:pointer}
 
   <div class="wrap">
     <div class="journey" id="journey">
-      <svg id="road" aria-hidden="true"><path class="bed" id="bed"/><path class="glow" id="glow"/><path class="trail" id="trail"/><g id="stops"></g></svg>
+      <svg id="road" aria-hidden="true"><path class="bed" id="bed"/><path class="glow" id="glow"/><path class="trail" id="trail"/><g id="prints"></g><g id="stops"></g></svg>
       <div id="traveler" aria-hidden="true"><svg viewBox="0 0 32 30"><use href="#heart" fill="#a65f38"/></svg></div>
 
       <section class="stop" data-stop>
@@ -541,6 +571,7 @@ button{font:inherit;cursor:pointer}
       else h += '<div class="d'+(we?' we':'')+'">'+i+'</div>';
     }
     document.getElementById('cal').innerHTML = h + '</div>';
+    document.getElementById('cal').appendChild(document.getElementById('countdown'));   /* clock lives inside the calendar card */
   })();
 
   /* ---- dancing couple: pose frames with quick crossfades on a waltz beat ---- */
@@ -579,14 +610,22 @@ button{font:inherit;cursor:pointer}
 
   /* ---- countdown ---- */
   function plural(n, a, b, c){ n = Math.abs(n)%100; const n1=n%10; if(n>10&&n<20) return c; if(n1>1&&n1<5) return b; if(n1===1) return a; return c; }
+  const cdEl = document.getElementById('countdown');
+  cdEl.innerHTML = [0,1,2,3].map(() => '<div class="cd"><b></b><small></small></div>').join('');
+  const cdB = [...cdEl.querySelectorAll('b')], cdS = [...cdEl.querySelectorAll('small')];
+  const FORMS = [['день','дня','дней'],['час','часа','часов'],['минута','минуты','минут'],['секунда','секунды','секунд']];
   function tick(){
     let s = Math.max(0, Math.floor((EVENT.date - Date.now())/1000));
-    const D = Math.floor(s/86400); s%=86400; const H = Math.floor(s/3600); s%=3600; const M = Math.floor(s/60);
-    document.getElementById('countdown').innerHTML =
-      [[D,'день','дня','дней'],[H,'час','часа','часов'],[M,'минута','минуты','минут']]
-      .map(x => '<div class="cd"><b>'+x[0]+'</b><small>'+plural(x[0],x[1],x[2],x[3])+'</small></div>').join('');
+    const D = Math.floor(s/86400); s%=86400; const H = Math.floor(s/3600); s%=3600; const M = Math.floor(s/60), S = s%60;
+    [D,H,M,S].forEach((v,i) => {
+      const txt = i === 0 ? String(v) : String(v).padStart(2,'0');
+      if (cdB[i].textContent !== txt){
+        cdB[i].textContent = txt; cdS[i].textContent = plural(v, ...FORMS[i]);
+        if (!reduce){ cdB[i].classList.remove('flip'); void cdB[i].offsetWidth; cdB[i].classList.add('flip'); }
+      }
+    });
   }
-  tick(); setInterval(tick, 30000);
+  tick(); setInterval(tick, 1000);
 
   /* ---- envelope tilt ---- */
   const stage = document.getElementById('stage'), gate = document.getElementById('gate');
@@ -637,6 +676,19 @@ button{font:inherit;cursor:pointer}
 
   const endheart = document.getElementById('endheart'), finale = document.getElementById('finale');
   function relTop(el){ return el.getBoundingClientRect().top - journey.getBoundingClientRect().top; }
+  /* split each section into blocks that alternate sides down the whole letter */
+  let weaveGroups = [];
+  (function(){
+    sections.forEach(sec => {
+      let cur = null, firstInSec = true;
+      [...sec.children].forEach(el => {
+        const key = el.matches('.kicker, h2, p') ? 'head' : (el.matches('.addr, .map, .actions') ? 'map' : null);
+        if (cur && key && cur.key === key) cur.els.push(el);
+        else { cur = {key, els:[el], first:firstInSec}; weaveGroups.push(cur); firstInSec = false; }
+      });
+    });
+    weaveGroups.forEach((g,i) => { g.side = i%2 ? 'wl' : 'wr'; g.els.forEach((el,j) => { el.classList.add(g.side); if (j === 0) el.classList.add('wfirst'); }); });
+  })();
   /* deckled paper edges: an irregular outline, like the hand-made card */
   function tearEdges(){
     const sheet = document.getElementById('sheet'), sh = document.getElementById('sheetShadow');
@@ -659,8 +711,19 @@ button{font:inherit;cursor:pointer}
     const poly = 'polygon(' + pts.map(p => p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px').join(',') + ')';
     page.style.clipPath = poly; sh.style.clipPath = poly;
   }
+  function tearBlocks(){
+    document.querySelectorAll('.cal, .cd, .fun li, .manor, .map, .contacts').forEach((el,k) => {
+      el.classList.add('torn');
+      const w = el.offsetWidth, h = el.offsetHeight; if (!w || !h) return;
+      let seed = 11 + k*97; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      const amp = Math.min(4.5, Math.max(2, Math.min(w,h)/40)), pts = [];
+      const edge = (len, f) => { let t = 0, slow = 0; while (t < len){ slow = (slow + (rnd()-.5)*1.4)*.8; pts.push(f(Math.min(t,len), Math.max(0, Math.min(amp*2, amp*.7 + slow + rnd()*amp*.8)))); t += 3 + rnd()*6; } };
+      edge(w,(t,d)=>[t,d]); edge(h,(t,d)=>[w-d,t]); edge(w,(t,d)=>[w-t,h-d]); edge(h,(t,d)=>[d,h-t]);
+      el.style.clipPath = 'polygon(' + pts.map(p => p[0].toFixed(1)+'px '+p[1].toFixed(1)+'px').join(',') + ')';
+    });
+  }
   function layoutRoad(){
-    tearEdges();
+    tearBlocks(); tearEdges();
     const W = journey.offsetWidth, H = journey.offsetHeight;
     road.setAttribute('width', W); road.setAttribute('height', H); road.setAttribute('viewBox','0 0 '+W+' '+H);
     const eh = endheart.getBoundingClientRect(), jr = journey.getBoundingClientRect();
@@ -668,15 +731,22 @@ button{font:inherit;cursor:pointer}
     endY = ey;
     /* the line flows in the free strip beside each block, bowing outward so the block sits in its hollow */
     const pts = [], starts = [];
-    sections.forEach((sec,i) => {
-      const r = sec.getBoundingClientRect(), left = r.left - jr.left, right = r.right - jr.left;
-      const contentLeft = left < W*0.1;                 /* block hugs the left edge -> line on the right */
-      const free0 = contentLeft ? right : 0, free1 = contentLeft ? W : left;
-      const inner = contentLeft ? free0 + (free1-free0)*.38 : free1 - (free1-free0)*.38;
-      const outer = contentLeft ? free0 + (free1-free0)*.72 : free1 - (free1-free0)*.72;
-      const top = r.top - jr.top + 70, bot = r.bottom - jr.top - 50, h = bot - top;
-      pts.push([inner, top], [outer, top + h*.5], [inner, bot]);
-      starts.push(top);
+    /* every block sits to one side; the line bows around it on the free side, then swings across to the next one */
+    weaveGroups.forEach(g => {
+      let t = 1e9, b = -1e9, l = 1e9, r = -1e9;
+      g.els.forEach(el => { const q = el.getBoundingClientRect(); t = Math.min(t,q.top); b = Math.max(b,q.bottom); l = Math.min(l,q.left); r = Math.max(r,q.right); });
+      const contentLeft = g.side === 'wl';
+      const free0 = contentLeft ? r - jr.left : 0, free1 = contentLeft ? W : l - jr.left;
+      const inner = contentLeft ? free0 + (free1-free0)*.34 : free1 - (free1-free0)*.34;
+      const outer = contentLeft ? free0 + (free1-free0)*.62 : free1 - (free1-free0)*.62;
+      const top = t - jr.top + 4, bot = b - jr.top - 4, h = Math.max(20, bot - top);
+      if (pts.length){
+        /* cross over in the gap between two blocks, through the middle of the sheet */
+        const prev = pts[pts.length-1], gapMid = (prev[1] + top) / 2;
+        if (top - prev[1] > 16) pts.push([W/2, gapMid]);
+      }
+      pts.push([inner, top], [outer, top + h*.5], [inner, top + h]);
+      if (g.first) starts.push(top);
     });
     /* finale: go down the free side around the glasses and the signature, then turn softly into the end heart */
     const rw = finale.querySelector('.rings-wrap'), sg = finale.querySelector('.sig');
@@ -705,6 +775,18 @@ button{font:inherit;cursor:pointer}
     table = [];
     const N = 1600;
     for (let i=0;i<=N;i++){ const L = total*i/N; table.push([L, trail.getPointAtLength(L).y]); }
+    /* footprints: every ~26px along the path, alternating to each side and turned along the way */
+    const printsG = document.getElementById('prints'); printsG.innerHTML = ''; printLens = []; printsOn = 0;
+    for (let L = 14, k = 0; L < total - 30; L += 26, k++){
+      const a = trail.getPointAtLength(L), b = trail.getPointAtLength(Math.min(total, L + 2));
+      const ang = Math.atan2(b.y - a.y, b.x - a.x), side = k % 2 ? 1 : -1;
+      const nx = -Math.sin(ang) * 5 * side, ny = Math.cos(ang) * 5 * side;
+      const u = document.createElementNS('http://www.w3.org/2000/svg','use');
+      u.setAttribute('href','#heart'); u.setAttribute('width', 10); u.setAttribute('height', 9.4);
+      u.setAttribute('x', -5); u.setAttribute('y', -4.7);
+      u.setAttribute('transform', 'translate('+(a.x+nx).toFixed(1)+' '+(a.y+ny).toFixed(1)+') rotate('+((ang*180/Math.PI) - 90 + side*12).toFixed(1)+')');
+      printsG.appendChild(u); printLens.push(L);
+    }
     stopsG.innerHTML = ''; stopLens = [];
     starts.forEach(y => {
       const L = lenAtY(y), pt = trail.getPointAtLength(L);
@@ -715,7 +797,7 @@ button{font:inherit;cursor:pointer}
     });
     onScroll(); draw(false);
   }
-  let endY = 0;
+  let endY = 0, printLens = [], printsOn = 0;
   function lenAtY(y){
     let lo = 0, hi = table.length-1;
     while (hi-lo > 1){ const m = (lo+hi)>>1; if (table[m][1] < y) lo = m; else hi = m; }
@@ -764,7 +846,9 @@ button{font:inherit;cursor:pointer}
     let ang = Math.atan2(q.x-p.x, q.y-p.y) * -180/Math.PI;
     ang = Math.max(-18, Math.min(18, ang * .3));
     traveler.style.transform = 'translate('+p.x+'px,'+p.y+'px) rotate('+ang+'deg)';
-    trail.style.strokeDashoffset = total - cur; glow.style.strokeDashoffset = total - cur;
+    const pg = document.getElementById('prints').children;
+    let n = 0; while (n < printLens.length && printLens[n] <= cur) n++;
+    if (n !== printsOn){ for (let j = Math.min(n, printsOn); j < Math.max(n, printsOn); j++) pg[j] && pg[j].classList.toggle('on', j < n); printsOn = n; }
     [...stopsG.children].forEach((h,i) => {
       const reached = cur >= stopLens[i]-1;
       if (reached && !h.classList.contains('lit')) { h.classList.add('lit'); if (!reduce) for (let n=0;n<6;n++) spark(h.x.baseVal.value+9, h.y.baseVal.value+9); }
