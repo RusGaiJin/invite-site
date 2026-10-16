@@ -142,10 +142,10 @@ button{font:inherit;cursor:pointer}
 .sprig.l{left:-14px;transform-origin:0 50%}
 .sprig.r{right:-14px;transform:scaleY(-1);transform-origin:100% 50%;animation-name:swayR}
 .hero{position:relative;z-index:1;text-align:center;padding-block:8px 30px}
-.hero::before{display:none;content:"";position:absolute;left:50%;top:47%;width:min(125%,780px);aspect-ratio:1100/396;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
-  background:url("a/rings3dc.webp") center/contain no-repeat;opacity:1;animation:ringsGlow 7s ease-in-out infinite alternate}
-@keyframes ringsIn{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}to{opacity:.92;transform:translate(-50%,-50%) scale(1)}}
-@keyframes ringsGlow{from{opacity:.92;transform:translate(-50%,-50%) scale(1)}to{opacity:1;transform:translate(-50%,-50%) scale(1.02)}}
+.hero::before{content:"";position:absolute;left:50%;top:40%;width:min(125%,780px);aspect-ratio:1100/396;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+  background:url("a/rings3dc.webp") center/contain no-repeat;opacity:.42;animation:ringsGlow 7s ease-in-out infinite alternate}
+@keyframes ringsIn{from{opacity:0;transform:translate(-50%,-46%) scale(.96)}to{opacity:.42;transform:translate(-50%,-50%) scale(1)}}
+@keyframes ringsGlow{from{opacity:.42;transform:translate(-50%,-50%) scale(1)}to{opacity:.5;transform:translate(-50%,-50%) scale(1.02)}}
 .anim .hero::before{opacity:0}
 .anim .page.on .hero::before{animation:ringsIn 2.2s cubic-bezier(.22,1,.36,1) .6s forwards, ringsGlow 7s ease-in-out 2.8s infinite alternate}
 .band{position:relative;overflow:hidden;height:100vh;height:100svh;min-height:520px;max-height:1000px;
@@ -154,10 +154,10 @@ button{font:inherit;cursor:pointer}
   background:radial-gradient(95% 78% at 50% 42%,rgba(255,249,236,.55) 0%,rgba(218,198,158,.26) 70%,rgba(218,198,158,0) 100%);
   -webkit-mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%)}
 .band::after{content:none}
-.band .band-dancer{position:absolute;left:50%;bottom:19%;height:min(72%,calc(88vw * 620 / 420));aspect-ratio:420/620;transform:translateX(-50%);z-index:2}
+.band .band-dancer{position:absolute;left:50%;bottom:26%;height:min(72%,calc(88vw * 620 / 420));aspect-ratio:420/620;transform:translateX(-50%);z-index:2}
 .band::selection{background:none}
 .hearts{position:absolute;inset:0;z-index:2;pointer-events:none}
-.band-date{position:absolute;left:0;right:0;bottom:6%;z-index:4;display:grid;gap:2px;justify-items:center;text-align:center;padding-inline:16px}
+.band-date{position:absolute;left:0;right:0;bottom:calc(7% + 34px);z-index:4;display:grid;gap:2px;justify-items:center;text-align:center;padding-inline:16px}
 .bd-day{font-family:var(--f-script);color:var(--wine);font-size:clamp(38px,9vw,60px);line-height:1.05}
 .bd-sub{font-family:var(--f-display);letter-spacing:.12em;text-transform:uppercase;font-size:11px;color:var(--ink-soft);text-wrap:balance;max-width:30ch}
 .anim .band-date{opacity:0;transform:translateY(14px)}
@@ -186,7 +186,9 @@ button{font:inherit;cursor:pointer}
 .lead{font-family:var(--f-display);font-size:clamp(20px,4.6vw,26px);line-height:1.35;max-width:30ch;margin:0 auto;text-wrap:balance}
 .datebar{display:inline-flex;align-items:center;gap:16px;margin-top:28px;font-family:var(--f-display);font-size:clamp(22px,5vw,30px);letter-spacing:.08em;font-variant-numeric:tabular-nums}
 .datebar i{width:6px;height:6px;border-radius:50%;background:var(--wine)}
-.scrollcue{margin-top:36px;font-size:13px;color:var(--ink-soft);letter-spacing:.06em}
+.scrollcue{display:grid;justify-items:center;gap:6px;margin-top:14px;font-size:14px;font-style:italic;color:var(--ink-soft);letter-spacing:.03em}
+.scrollcue i{width:10px;height:10px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);animation:cueBob 1.8s ease-in-out infinite}
+@keyframes cueBob{0%,100%{translate:0 0;opacity:.45}50%{translate:0 5px;opacity:1}}
 
 .journey{position:relative;--g:16px;padding-inline:var(--g);padding-bottom:30px}
 @media (min-width:700px){.journey{--g:24px}}
@@ -367,6 +369,7 @@ button{font:inherit;cursor:pointer}
   --emb-sm:-.8px -.8px 0 rgba(255,252,242,.9),1px 1.1px .6px rgba(84,54,26,.44),1.6px 2px 3px rgba(84,54,26,.16);
 }
 .names,.bd-day,.sig,.card strong{text-shadow:var(--emb-lg)}
+.hero .names,.hero .lead{text-shadow:var(--emb-lg),0 0 10px rgba(240,230,212,.9),0 0 22px rgba(240,230,212,.7)}
 .names span{text-shadow:var(--emb)}
 .stop h2,.lead,.datebar,.cd b,.fun b,.ct-t b,.cal-head,.place-name,.card em{text-shadow:var(--emb)}
 .page,.card{text-shadow:var(--emb-sm)}
@@ -383,13 +386,6 @@ button{font:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01s!important;transition-delay:0s!important}
 }
-/* coloured relief rings sit between the two names, the small "и" rests on them */
-.names span{position:relative;display:grid!important;place-items:center;height:clamp(118px,34vw,190px);margin:.12em -12% !important;
-  background:url("a/rings3dc.webp") center/contain no-repeat;font-size:.3em!important;color:transparent!important;text-shadow:none!important}
-.anim .names span{opacity:0;transform:scale(.94)}
-.anim .page.on .names span{animation:ringsShow 1.6s cubic-bezier(.22,1,.36,1) 1.3s forwards, ringsBreath 7s ease-in-out 3s infinite alternate}
-@keyframes ringsShow{to{opacity:1;transform:none}}
-@keyframes ringsBreath{from{transform:scale(1)}to{transform:scale(1.025)}}
 </style>
 
 <!-- ====== Envelope gate ====== -->
@@ -450,14 +446,13 @@ button{font:inherit;cursor:pointer}
   <section class="band" aria-label="Жених и невеста танцуют вальс">
     <div class="deco top" aria-hidden="true"><img class="c-tl" src="a/corner-tl.webp" alt=""><img class="c-tr" src="a/corner-br.webp" alt=""></div>
     <div class="dancer band-dancer" data-dancer></div>
-    <div class="band-date"><span class="bd-day">27 ноября 2026</span><span class="bd-sub">пятница · 13:00 · Барская усадьба</span></div>
+    <div class="band-date"><span class="bd-day">27 ноября 2026</span><span class="bd-sub">пятница · 13:00 · Барская усадьба</span><span class="scrollcue">Листайте вниз — сердце покажет дорогу<i aria-hidden="true"></i></span></div>
     <div class="hearts" aria-hidden="true"><span class="fh" style="--x:22%;--d:0s"></span><span class="fh" style="--x:74%;--d:1.2s"></span><span class="fh" style="--x:32%;--d:2.4s"></span><span class="fh" style="--x:66%;--d:3.3s"></span><span class="fh" style="--x:48%;--d:4.4s"></span><span class="fh" style="--x:84%;--d:5.2s"></span><span class="fh" style="--x:14%;--d:3.9s"></span></div>
   </section>
   <header class="hero wrap">
     <div class="eyebrow">Мы женимся</div>
     <h1 class="names">Геннадий<span>и</span>Наталья</h1>
     <p class="lead">Приглашаем вас разделить с нами этот особенный день</p>
-    <div class="scrollcue">Листайте вниз — сердце покажет дорогу</div>
   </header>
 
   <div class="wrap">
